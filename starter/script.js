@@ -16,10 +16,28 @@ const inputElevation = document.querySelector('.form__input--elevation');
 navigator.geolocation.getCurrentPosition(function(position){
     const {latitude}=position.coords;
     const {longitude}=position.coords;
+    const cords=[latitude,longitude]
     console.log(latitude,longitude)
-    console.log(position)
+    console.log(`https://www.google.pt/maps/@${latitude},${longitude}`)
+
+
+    const map = L.map('map').setView(cords, 13);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+
+    map.on('click',function(mapevent){
+        console.log(mapevent)
+        const{lat,lng}=mapevent.latlng;
+
+        L.marker([lat,lng]).addTo(map)
+    .bindPopup('workout')
+    .openPopup();
+    })
 },
 function(){
-        alert('you not get your location')
+        alert('soory we can not get your location')
     }
 )
