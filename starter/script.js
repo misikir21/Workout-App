@@ -12,6 +12,24 @@ const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 /////////////////////////////////////////////////////////////////////
 //add location
+let map,mapevent;
+
+class App{
+    constructor(){
+        this._getposition()
+    }
+
+    _getposition(){
+
+    }
+
+    _loaddata(){
+         
+    }
+}   
+
+
+
 
 navigator.geolocation.getCurrentPosition(function(position){
     const {latitude}=position.coords;
@@ -28,20 +46,21 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 map.on('click',function(mapevent){
-        console.log(mapevent)
-        const{lat,lng}=mapevent.latlng;
+    form.classList.remove('hidden');
+    //     console.log(mapevent)
+    //     const{lat,lng}=mapevent.latlng;
 
-        L.marker([lat,lng]).addTo(map)
-    .bindPopup(L.popup({
-        maxWidth:250,
-        minWidth:100,
-        autoClose:false,
-        closeOnClick:false,
-        className:'running-popup',
-    })
-    )
-    .setPopupContent('Workout')
-    .openPopup();
+    //     L.marker([lat,lng]).addTo(map)
+    // .bindPopup(L.popup({
+    //     maxWidth:250,
+    //     minWidth:100,
+    //     autoClose:false,
+    //     closeOnClick:false,
+    //     className:'running-popup',
+    // })
+    // )
+    // .setPopupContent('Workout')
+    // .openPopup();
     })
 },
 function(){
