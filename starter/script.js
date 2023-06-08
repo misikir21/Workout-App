@@ -27,13 +27,20 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-
-    map.on('click',function(mapevent){
+map.on('click',function(mapevent){
         console.log(mapevent)
         const{lat,lng}=mapevent.latlng;
 
         L.marker([lat,lng]).addTo(map)
-    .bindPopup('workout')
+    .bindPopup(L.popup({
+        maxWidth:250,
+        minWidth:100,
+        autoClose:false,
+        closeOnClick:false,
+        className:'running-popup',
+    })
+    )
+    .setPopupContent('Workout')
     .openPopup();
     })
 },
@@ -41,3 +48,30 @@ function(){
         alert('soory we can not get your location')
     }
 )
+
+//get data from form
+
+const type=inputType.value;
+const distance=+inputDistance.value;
+const duration=+inputDuration.value;
+
+
+
+//check if data is valid
+
+
+
+
+//if workout running ,create a running object
+if(type ==='running'){
+    const cadence=+inputCadence.value;
+}
+
+
+
+
+
+//if workout cycling ,create a cycling object
+if(type ==='cycling'){
+    const cadence=+inputElevation.value;
+}
