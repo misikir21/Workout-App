@@ -39,28 +39,18 @@ navigator.geolocation.getCurrentPosition(function(position){
     console.log(`https://www.google.pt/maps/@${latitude},${longitude}`)
 
 
-    const map = L.map('map').setView(cords, 13);
+     map = L.map('map').setView(cords, 13);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-map.on('click',function(mapevent){
-    form.classList.remove('hidden');
-    //     console.log(mapevent)
-    //     const{lat,lng}=mapevent.latlng;
 
-    //     L.marker([lat,lng]).addTo(map)
-    // .bindPopup(L.popup({
-    //     maxWidth:250,
-    //     minWidth:100,
-    //     autoClose:false,
-    //     closeOnClick:false,
-    //     className:'running-popup',
-    // })
-    // )
-    // .setPopupContent('Workout')
-    // .openPopup();
+///handling clicks on maps
+map.on('click',function(mape){
+    mapevent=mape;
+    form.classList.remove('hidden');
+    inputDistance.focus();
     })
 },
 function(){
@@ -94,3 +84,31 @@ if(type ==='running'){
 if(type ==='cycling'){
     const cadence=+inputElevation.value;
 }
+
+
+
+///////////////////////display marker//////////////
+form.addEventListener('submit',function(e){
+    e.preventDefault();
+    //cleat the feilds
+    inputDistance.value =inputDuration.value=inputElevation.value=inputCadence.value='';
+    console.log(mapevent)
+        const{lat,lng}=mapevent.latlng;
+
+        L.marker([lat,lng]).addTo(map)
+    .bindPopup(L.popup({
+        maxWidth:250,
+        minWidth:100,
+        autoClose:false,
+        closeOnClick:false,
+        className:'running-popup',
+    })
+    )
+    .setPopupContent('Workout')
+    .openPopup();
+});
+//toggle input change
+inputType.addEventListener('change',function(){
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+})
