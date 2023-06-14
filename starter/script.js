@@ -10,16 +10,53 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+class Workout {
+ date=new Date();
+ id=(Date.now()+'').slice(-10) 
+ constructor(coords,distance,duration){
+  this.distance=distance;
+  this.coords=coords;
+  this.duration=duration;
+ }   
+}
 
+
+class Running extends Workout{
+    constructor(coords,distance,duration,cadence){
+    super(coords,distance,duration);
+    this.cadence=cadence;
+    this.calPace()  
+}
+calPace(){
+    this.pace=this.duration /this.distance;
+    return this.calPace
+}
+}
+
+
+class Cycling extends Workout{
+    constructor(coords,distance,duration,elevationGain){
+    super(coords,distance,duration);
+    this.elevationGain=elevationGain;  
+    this.calcSpeed()
+}
+calcSpeed(){
+this.speed=this.distance/(this.duration/60)
+return this.speed
+}
+}
+const r1=new Running([23,10],5.2,24,18)
+const c1=new Cycling([23,10],5.2,24,18)
+console.log(c1,r1)
 /////////////////////////////////////////////////////////////////////
-//add location
-let map,mapEvent;
+//application architeture
 class App{
     #map;
     #mapEvent;
     constructor(){
         this._getPosition();
         form.addEventListener('submit',this._newWorkout.bind(this))
+        inputType.addEventListener('change',this._toggleElevationField)
     }
 
     _getPosition(){
@@ -53,7 +90,10 @@ class App{
         form.classList.remove('hidden')
         inputDistance.focus()
       }
-        // _toggleElevationField(){}
+        _toggleElevationField(){
+            inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+            inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+        }
         _newWorkout(e)
         {
             e.preventDefault();
@@ -84,7 +124,3 @@ form.addEventListener('submit',function(e){
     
 })
 
-inputType.addEventListener('change',function(){
-    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-})
