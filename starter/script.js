@@ -94,10 +94,47 @@ class App{
             inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
             inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         }
-        _newWorkout(e)
+        _newWorkout(e){
+        const validinputs=(...inputs)=>
+        inputs.every(inp=>Number.isFinite(inp));
+        const allpostive=(...inputs)=>inputs.every(inp =>inp >0)
         {
+
             e.preventDefault();
     //clear the input feilds
+    //get data from form
+    const type=inputType.value;
+    const distance=+inputDistance.value;
+    const duration=+inputDuration.value;
+
+
+    //if workout is running ,create a running object
+    if(type ==='running'){
+        const cadence=inputCadence.value;
+        
+
+        //check if the data is a valid one
+        if(
+            // !Number.isFinite(distance) ||
+            // !Number.isFinite(duration) ||
+            // !Number.isFinite(cadence) 
+            !validinputs(duration,distance,cadence) || !allpostive(distance,duration,cadence)
+        )
+            return alert('inputs have to be postive numbers!');
+        }
+
+
+     //if workout is cycling ,create a cycling object
+     if(type ==='cycling'){
+        const elevation=inputElevation.value;
+        if(
+            // !Number.isFinite(distance) ||
+            // !Number.isFinite(duration) ||
+            // !Number.isFinite(cadence) 
+            !validinputs(duration,distance,elevation)|| !allpostive(distance,duration)
+        )
+        return alert('inputs have to be postive numbers!');
+    }
     inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
     const{lat,lng}=this.#mapEvent.latlng;
 L.marker([lat,lng])
@@ -116,7 +153,7 @@ L.marker([lat,lng])
     .openPopup();
     
 }
-
+        }
 }
 const app=new App()
 //display marker 
