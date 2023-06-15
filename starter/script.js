@@ -53,6 +53,7 @@ console.log(c1,r1)
 class App{
     #map;
     #mapEvent;
+    #workouts=[];
     constructor(){
         this._getPosition();
         form.addEventListener('submit',this._newWorkout.bind(this))
@@ -106,6 +107,8 @@ class App{
     const type=inputType.value;
     const distance=+inputDistance.value;
     const duration=+inputDuration.value;
+    const{lat,lng}=this.#mapEvent.latlng;
+    let workout;
 
 
     //if workout is running ,create a running object
@@ -123,7 +126,7 @@ class App{
             return alert('inputs have to be postive numbers!');
         }
 
-
+         workout=new Running([lat,lng],distance,duration,cadence);
      //if workout is cycling ,create a cycling object
      if(type ==='cycling'){
         const elevation=inputElevation.value;
@@ -134,9 +137,10 @@ class App{
             !validinputs(duration,distance,elevation)|| !allpostive(distance,duration)
         )
         return alert('inputs have to be postive numbers!');
+        workout=new Cycling([lat,lng],distance,duration,elevation);
     }
     inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
-    const{lat,lng}=this.#mapEvent.latlng;
+   
 L.marker([lat,lng])
 .addTo(this.#map)
 .bindPopup(
