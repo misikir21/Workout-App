@@ -107,14 +107,17 @@ class App{
             //check if the workout is running
 if(type ==='running'){
     const cadence=+inputCadence.value;
-    if(!validInputs(distance,duration,cadence)) 
+    if(
+    !validInputs(distance,duration,cadence) ||
+    !allPositive(distance,duration,cadence))
     return alert("inputs should have to be a postive numbers")
 }
 
 //check if the workout is cyling 
 if(type ==='cycling'){
-    const cadence=+inputElevation.value;
-    if(!validInputs(distance,duration,elevationGain)) 
+    const elevation=+inputElevation.value;
+    !validInputs(distance,duration,elevation) ||
+    !allPositive(distance,duration)
     return alert("inputs should have to be a postive numbers")
 }
     //clear the input feilds
