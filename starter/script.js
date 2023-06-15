@@ -94,22 +94,28 @@ class App{
             inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
             inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         }
-        _newWorkout(e)
-        {
+        _newWorkout(e){
+            const validInputs = (...inputs) =>
+            inputs.every(inp => Number.isFinite(inp));
+            const allPositive = (...inputs) => inputs.every(inp => inp > 0);
             e.preventDefault();
             //GET DATA FROM FORM
             const type=inputType.value;
-            const distance=inputDistance.value;
-            const duration=inputDuration.value;
+            const distance=+inputDistance.value;
+            const duration=+inputDuration.value;
 
             //check if the workout is running
 if(type ==='running'){
-    const cadence=inputCadence.value;
+    const cadence=+inputCadence.value;
+    if(!validInputs(distance,duration,cadence)) 
+    return alert("inputs should have to be a postive numbers")
 }
 
 //check if the workout is cyling 
 if(type ==='cycling'){
-    const cadence=inputElevation.value;
+    const cadence=+inputElevation.value;
+    if(!validInputs(distance,duration,elevationGain)) 
+    return alert("inputs should have to be a postive numbers")
 }
     //clear the input feilds
     inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
