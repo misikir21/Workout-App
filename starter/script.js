@@ -136,11 +136,15 @@ if (type === 'cycling') {
 this.#workouts.push(workout);
 console.log(workout)
 
-this.renderworkoutmarker(workout)
+this._renderworkoutmarker(workout)
     //clear the input feilds
+
+
+    //render workout on sidebar
+    this._renderworkout(workout);
     inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
 }
-renderworkoutmarker(workout){
+_renderworkoutmarker(workout){
     L.marker(workout.coords)
 .addTo(this.#map)
 .bindPopup(
@@ -157,10 +161,11 @@ renderworkoutmarker(workout){
     .openPopup();
     
 }
+_renderworkout(workout){
+
+}
 }
 const app=new App()
 //display marker 
-form.addEventListener('submit',function(e){
-    
-})
+
 
