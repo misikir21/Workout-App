@@ -160,7 +160,8 @@ console.log(workout)
 
 this._renderworkoutmarker(workout)
     //clear the input feilds
-
+//set the lolcal storage 
+_setlocalstorage()
 
     //render workout on sidebar
     this._renderworkout(workout);
@@ -247,5 +248,9 @@ this.#map.setView(workout.coords,this.#zoomlevel,{
 }
 }
 
+_setlocalstorage()
+{
+  localStorage.setItem('workouts',JSON.stringify(this.#workouts) )
+}
  
 const app=new App()
