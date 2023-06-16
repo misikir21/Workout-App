@@ -102,27 +102,33 @@ class App{
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.#map);
         //add location to map on click
-        this.#map.on('click',this._showForm.bind(this))}
+        this.#map.on('click',this._showForm.bind(this))
+        this.#workouts.forEach(work=>{
+          this._renderworkoutmarker(work)
+         })
         
-        
-      _showForm(mapE){
+      _showForm(mapE)
+      {
         this.#mapEvent=mapE;
         form.classList.remove('hidden')
         inputDistance.focus()
       }
 
-    _hideform(){
+    _hideform()
+    {
         inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
         form.style.display = 'none';
     form.classList.add('hidden');
     setTimeout(() => (form.style.display = 'grid'), 1000);
 
     }
-        _toggleElevationField(){
+        _toggleElevationField()
+        {
 inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
             inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         }
-        _newWorkout(e){
+        _newWorkout(e)
+        {
             const validInputs = (...inputs) =>
             inputs.every(inp => Number.isFinite(inp));
             const allPositive = (...inputs) => inputs.every(inp => inp > 0);
@@ -170,7 +176,8 @@ this._renderworkout(workout);
 this._hideform();
 this._setlocalstorage()
 }
-_renderworkoutmarker(workout){
+_renderworkoutmarker(workout)
+{
     L.marker(workout.coords)
 .addTo(this.#map)
 .bindPopup(
@@ -187,7 +194,8 @@ _renderworkoutmarker(workout){
     .openPopup();
     
 }
-_renderworkout(workout){
+_renderworkout(workout)
+{
     let html=`<li class="workout workout--${workout.type}" data-id="${workout.id}">
     <h2 class="workout__title">${workout.description}</h2>
     <div class="workout__details">
@@ -255,14 +263,20 @@ _setlocalstorage()
 {
   localStorage.setItem('workouts',JSON.stringify(this.#workouts));
 }
-_getlocalstorage(){
+_getlocalstorage()
+{
  const data =JSON.parse(localStorage.getItem('workouts'));
  console.log(data)
  if(!data) return;
  this.#workouts=data;
  this.#workouts.forEach(work=>{
   this._renderworkout(work)
- })
+})
 }
+reset()
+{
+  localStorage.removeItem('workouts');
+  location.reload()
 }
 const app=new App()
+}}
