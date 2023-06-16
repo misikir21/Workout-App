@@ -13,6 +13,8 @@ const inputElevation = document.querySelector('.form__input--elevation');
 class Workout {
  date=new Date();
  id=(Date.now()+'').slice(-10) 
+
+
  constructor(coords,distance,duration){
   this.distance=distance;
   this.coords=coords;
@@ -64,11 +66,14 @@ console.log(c1,r1)
 class App{
     #map;
     #mapEvent;
+    #zoomlevel=13;
     #workouts=[];
     constructor(){
         this._getPosition();
         form.addEventListener('submit',this._newWorkout.bind(this))
         inputType.addEventListener('change',this._toggleElevationField)
+        containerWorkouts.addEventListener('click',this._movetopopup.bind(this));
+
     }
 
     _getPosition(){
@@ -88,7 +93,7 @@ class App{
             console.log(`https://www.google.pt/maps/@${latitude},${longitude}`)
         
         
-            this.#map = L.map('map').setView(cords, 13);
+            this.#map = L.map('map').setView(cords, this.#zoomlevel);
         
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -225,5 +230,22 @@ html += `
 form.insertAdjacentHTML('afterend', html);
 //display marker 
 }
+_movetopopup(e)
+{
+const workoute1=e.target.closest('.workout');
+console.log(workoute1)
+if(!workoute1) return;
+const workout=this.#workouts.find(work =>work.id ===workoute1.dataset.id);
+console.log(workout)
+this.#map.setView(workout.coords,this.#zoomlevel,{
+  animate:true,
+  pan:
+  {
+    duration:1
+  }
+})
 }
+}
+
+ 
 const app=new App()
