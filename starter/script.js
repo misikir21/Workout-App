@@ -68,7 +68,10 @@ class App{
     #mapEvent;
     #zoomlevel=13;
     #workouts=[];
+
+
     constructor(){
+        this._getlocalstorage()
         this._getPosition();
         form.addEventListener('submit',this._newWorkout.bind(this))
         inputType.addEventListener('change',this._toggleElevationField)
@@ -161,11 +164,11 @@ console.log(workout)
 this._renderworkoutmarker(workout)
     //clear the input feilds
 //set the lolcal storage 
-_setlocalstorage()
 
-    //render workout on sidebar
-    this._renderworkout(workout);
-    this._hideform();
+//render workout on sidebar
+this._renderworkout(workout);
+this._hideform();
+this._setlocalstorage()
 }
 _renderworkoutmarker(workout){
     L.marker(workout.coords)
@@ -246,11 +249,20 @@ this.#map.setView(workout.coords,this.#zoomlevel,{
   }
 })
 }
-}
+
 
 _setlocalstorage()
 {
-  localStorage.setItem('workouts',JSON.stringify(this.#workouts) )
+  localStorage.setItem('workouts',JSON.stringify(this.#workouts));
 }
- 
+_getlocalstorage(){
+ const data =JSON.parse(localStorage.getItem('workouts'));
+ console.log(data)
+ if(!data) return;
+ this.#workouts=data;
+ this.#workouts.forEach(work=>{
+  this._renderworkout(work)
+ })
+}
+}
 const app=new App()
