@@ -102,8 +102,16 @@ class App{
         form.classList.remove('hidden')
         inputDistance.focus()
       }
+
+    _hideform(){
+        inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
+        form.style.display = 'none';
+    form.classList.add('hidden');
+    setTimeout(() => (form.style.display = 'grid'), 1000);
+
+    }
         _toggleElevationField(){
-            inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
             inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         }
         _newWorkout(e){
@@ -151,7 +159,7 @@ this._renderworkoutmarker(workout)
 
     //render workout on sidebar
     this._renderworkout(workout);
-    inputDistance.value=inputDuration.value=inputElevation.value=inputCadence.value='';
+    this._hideform();
 }
 _renderworkoutmarker(workout){
     L.marker(workout.coords)
@@ -166,7 +174,7 @@ _renderworkoutmarker(workout){
         
     })
     )
-    .setPopupContent('workout')
+    .setPopupContent(`${workout.type ==='running' ?'🏃‍♂️':'🚴‍♀️'} ${workout.description}`)
     .openPopup();
     
 }
